@@ -76,14 +76,14 @@ Vector<double> operator*(const PrT &value, const Vector<double> &V) {
     return result;
 }
 
-float dot(Vector<float> &left, Vector<float> &right) {
+inline float dot(Vector<float> &left, Vector<float> &right) {
     if (left.nelements() != right.nelements())
         throw std::runtime_error("Axis size error");
 
     return cblas_sdot(left.nelements(), left.data(), 1, right.data(), 1);
 }
 
-double dot(Vector<double> &left, Vector<double> &right) {
+inline double dot(Vector<double> &left, Vector<double> &right) {
     if (left.nelements() != right.nelements())
         throw std::runtime_error("Axis size error");
 

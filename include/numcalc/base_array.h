@@ -54,7 +54,7 @@ public:
         return _dimensions;
     }
 
-    virtual T* data() {
+    T* data() {
         return _data;
     }
 

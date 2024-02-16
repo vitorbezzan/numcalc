@@ -10,7 +10,7 @@
 namespace Matrix {
 
 template<typename T = float>
-class Vector: public BaseArray<T> {
+class Vector final: public BaseArray<T> {
 
     friend class Vector<T>;
 
@@ -95,5 +95,5 @@ T fabs(Vector<T> &v) {
     return std::sqrt(dot(v,v));
 }
 
-}
+} // namespace Matrix
 #endif

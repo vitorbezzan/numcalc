@@ -5,14 +5,14 @@
 #include <concepts>
 #include <iostream>
 
-#include "./derivative.h"
-#include "./rootfind.h"
+#include "derivative.h"
+#include "rootfind.h"
 
 namespace RootFind {
 
 template <typename PrT>
 requires std::is_floating_point_v<PrT>
-class Newton : public BaseRootFind<PrT, PrT> {
+class Newton final: public BaseRootFind<PrT, PrT> {
 
 public:
     Newton() = default;
@@ -33,8 +33,8 @@ public:
 
             if (std::fabs(x_new - x) <= this->precision())
                 break;
-            else
-                x = x_new;
+
+            x = x_new;
         }
 
         return x;

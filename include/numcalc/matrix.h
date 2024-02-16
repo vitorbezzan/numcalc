@@ -2,7 +2,6 @@
 #define __NUMCALC_MATRIX__
 
 #include <cblas.h>
-#include <cmath>
 #include <stdexcept>
 
 #include "base_array.h"
@@ -11,7 +10,7 @@
 namespace Matrix {
 
 template<typename T>
-class Matrix: public BaseArray<T> {
+class Matrix final : public BaseArray<T> {
 
     friend class Matrix<T>;
 
@@ -44,10 +43,10 @@ public:
                 this->operator()(row, col) = function(row, col);
     }
 
-    int rows() {
+    int rows() const {
         return _rows;
     }
-    int cols() {
+    int cols() const {
         return _cols;
     }
 
@@ -109,7 +108,7 @@ Vector<T> operator*(Matrix<T> &left, Vector<T> &right) {
 }
 
 template<>
-Vector<float> operator*<float>(Matrix<float> &left, Vector<float> &right) {
+inline Vector<float> operator*<float>(Matrix<float> &left, Vector<float> &right) {
     if (left.cols() != right.nelements())
         throw std::runtime_error("Invalid axis sizes for multiply");
 
@@ -121,7 +120,7 @@ Vector<float> operator*<float>(Matrix<float> &left, Vector<float> &right) {
 }
 
 template<>
-Vector<double> operator*<double>(Matrix<double> &left, Vector<double> &right) {
+inline Vector<double> operator*<double>(Matrix<double> &left, Vector<double> &right) {
     if (left.cols() != right.nelements())
         throw std::runtime_error("Invalid axis sizes for multiply");
 
@@ -140,7 +139,7 @@ Vector<T> operator*(Vector<T> &left, Matrix<T> &right) {
 }
 
 template<>
-Vector<float> operator*<float>(Vector<float> &left, Matrix<float> &right) {
+inline Vector<float> operator*<float>(Vector<float> &left, Matrix<float> &right) {
     if (left.nelements() != right.rows())
         throw std::runtime_error("Invalid axis sizes for multiply");
 
@@ -152,7 +151,7 @@ Vector<float> operator*<float>(Vector<float> &left, Matrix<float> &right) {
 }
 
 template<>
-Vector<double> operator*<double>(Vector<double> &left, Matrix<double> &right) {
+inline Vector<double> operator*<double>(Vector<double> &left, Matrix<double> &right) {
     if (left.nelements() != right.rows())
         throw std::runtime_error("Invalid axis sizes for multiply");
 
@@ -171,7 +170,7 @@ Matrix<T> operator*(Matrix<T> &left, Matrix<T> &right) {
 }
 
 template<>
-Matrix<float> operator*(Matrix<float> &left, Matrix<float> &right) {
+inline Matrix<float> operator*(Matrix<float> &left, Matrix<float> &right) {
     if (left.cols() != right.rows())
         throw std::runtime_error("Invalid axis sizes for multiply");
 
@@ -183,7 +182,7 @@ Matrix<float> operator*(Matrix<float> &left, Matrix<float> &right) {
 }
 
 template<>
-Matrix<double> operator*(Matrix<double> &left, Matrix<double> &right) {
+inline Matrix<double> operator*(Matrix<double> &left, Matrix<double> &right) {
     if (left.cols() != right.rows())
         throw std::runtime_error("Invalid axis sizes for multiply");
 
@@ -194,5 +193,5 @@ Matrix<double> operator*(Matrix<double> &left, Matrix<double> &right) {
     return C;
 }
 
-}
+} // namespace Matrix
 #endif

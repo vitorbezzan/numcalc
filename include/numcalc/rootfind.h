@@ -21,10 +21,10 @@ public:
         return OutT();
     }
 
-    int n_iter() {
+    int n_iter() const {
         return _n_iter;
     }
-    PrT precision() {
+    PrT precision() const {
         return _precision;
     }
 

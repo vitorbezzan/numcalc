@@ -10,13 +10,8 @@ set(VERSION "${VERSION}.${VERSION_FEATURE}.${VERSION_PATCH}")
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-include(FetchContent)
-FetchContent_Declare(
-        googletest
-        URL https://github.com/google/googletest/archive/refs/tags/v1.14.0.zip
-)
-set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-FetchContent_MakeAvailable(googletest)
+find_package(GTest REQUIRED)
+include_directories(${GTEST_INCLUDE_DIR})
 
 if(APPLE)
     message("Building for MacOS. Setting specific configurations.")
@@ -49,21 +44,25 @@ if(APPLE)
             "${HOMEBREW_PREFIX}/opt/lapack/include"
     )
 
+    add_executable(run_tests tests.cpp)
+    target_link_libraries(run_tests ${GTEST_LIBRARIES} cblas lapack pthread)
+
+    add_library(numcalc SHARED library.cpp)
+    target_link_libraries(numcalc cblas lapack pthread)
+
 elseif(UNIX)
     message("Building for *nix.")
 
     find_package(BLAS REQUIRED)
     find_package(LAPACK REQUIRED)
 
-    message( STATUS BLAS found: ${BLAS_LIBRARIES} )
-    message( STATUS LAPACK found: ${LAPACK_LIBRARIES} )
+    message(STATUS BLAS found: ${BLAS_LIBRARIES})
+    message(STATUS LAPACK found: ${LAPACK_LIBRARIES})
+
+    add_executable(run_tests tests.cpp)
+    target_link_libraries(run_tests ${GTEST_LIBRARIES} ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES} pthread)
+
+    add_library(numcalc SHARED library.cpp)
+    target_link_libraries(numcalc ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES} pthread)
 
 endif()
-
-# Test suite executable
-add_executable(run_tests tests.cpp)
-target_link_libraries(run_tests GTest::gtest_main cblas lapack pthread)
-
-# Library object
-add_library(numcalc SHARED library.cpp)
-target_link_libraries(numcalc cblas lapack pthread)

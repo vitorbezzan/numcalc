@@ -7,7 +7,9 @@
 
 #include "base_array.h"
 
-namespace Matrix {
+namespace numcalc::multirray {
+    // Definitions for multiarrays - vector
+
     template<typename T = float>
     class Vector final : public BaseArray<T> {
         friend class Vector<T>;
@@ -98,6 +100,6 @@ namespace Matrix {
     T fabs(Vector<T> &v) {
         return std::sqrt(dot(v, v));
     }
-} // namespace Matrix
+}
 
 #endif

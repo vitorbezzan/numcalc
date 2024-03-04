@@ -4,7 +4,9 @@
 #include <concepts>
 #include <functional>
 
-namespace Derivatives {
+namespace numcalc::derivatives {
+    // Definitions for derivatives
+
     template<typename T>
         requires std::is_floating_point_v<T>
     inline T derivative2(T (*f)(const T &), const T &x, const T &dx)
@@ -31,6 +33,6 @@ namespace Derivatives {
 
         return derivative4(f, x, dx);
     }
-} // namespace Derivatives
+}
 
 #endif

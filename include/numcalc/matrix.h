@@ -7,7 +7,9 @@
 #include "base_array.h"
 #include "vector.h"
 
-namespace Matrix {
+namespace numcalc::multirray {
+    // Definitions for multiarrays - matrix
+
     template<typename T>
     class Matrix final : public BaseArray<T> {
         friend class Matrix<T>;
@@ -195,6 +197,6 @@ namespace Matrix {
 
         return C;
     }
-} // namespace Matrix
+}
 
 #endif

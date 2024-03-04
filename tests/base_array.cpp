@@ -5,23 +5,23 @@
 
 #include "../include/numcalc/numcalc.h"
 
-TEST(BaseArray, TestConstructor1) {
-    auto A = Matrix::BaseArray({2, 2, 2});
+TEST(multiarray, base_constructor_1) {
+    auto A = numcalc::multirray::BaseArray({2, 2, 2});
 
     EXPECT_EQ(A.ndim(), 3);
     EXPECT_EQ(A.nelements(), 8);
 }
 
-TEST(BaseArray, TestConstructor2) {
-    auto A = Matrix::BaseArray({1, 1, 2}, 3.0);
+TEST(multiarray, base_constructor_2) {
+    auto A = numcalc::multirray::BaseArray({1, 1, 2}, 3.0);
 
     EXPECT_EQ(A.ndim(), 3);
     EXPECT_EQ(A.nelements(), 2);
     EXPECT_EQ(A.data()[0], 3.0);
 }
 
-TEST(BaseArray, TestOperatorPas) {
-    auto A = Matrix::BaseArray({1, 1, 2}, 3.0);
+TEST(multiarray, operator_pas) {
+    auto A = numcalc::multirray::BaseArray({1, 1, 2}, 3.0);
     A({0, 0, 1}) = 4.5;
 
     EXPECT_EQ(A.ndim(), 3);
@@ -31,9 +31,9 @@ TEST(BaseArray, TestOperatorPas) {
     EXPECT_EQ(A({0,0,1}), 4.5);
 }
 
-TEST(BaseArray, TestCopyRef) {
-    auto A = Matrix::BaseArray({1, 1, 2}, 3.0);
-    auto b = Matrix::BaseArray(A);
+TEST(multiarray, copy_reference) {
+    auto A = numcalc::multirray::BaseArray({1, 1, 2}, 3.0);
+    auto b = numcalc::multirray::BaseArray(A);
 
     EXPECT_EQ(b.ndim(), 3);
     EXPECT_EQ(b.nelements(), 2);
@@ -45,8 +45,8 @@ TEST(BaseArray, TestCopyRef) {
     EXPECT_NE(A({0,0,0}), b({0,0,0}));
 }
 
-TEST(BaseArray, TestEq) {
-    auto A = Matrix::BaseArray({1, 1, 2}, 3.0);
+TEST(multiarray, equality) {
+    auto A = numcalc::multirray::BaseArray({1, 1, 2}, 3.0);
     auto b = A;
 
     EXPECT_EQ(b.ndim(), 3);
@@ -59,9 +59,9 @@ TEST(BaseArray, TestEq) {
     EXPECT_NE(A({0,0,0}), b({0,0,0}));
 }
 
-TEST(BaseArray, TestSum) {
-    auto A = Matrix::BaseArray({1, 1, 2}, 3.0);
-    auto B = Matrix::BaseArray({1, 1, 2}, 7.0);
+TEST(multiarray, sum) {
+    auto A = numcalc::multirray::BaseArray({1, 1, 2}, 3.0);
+    auto B = numcalc::multirray::BaseArray({1, 1, 2}, 7.0);
 
     EXPECT_EQ((A + B)({0,0,1}), 10.0);
     EXPECT_EQ((A - B)({0,0,1}), -4.0);

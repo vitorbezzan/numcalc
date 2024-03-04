@@ -6,10 +6,10 @@
 #include "../include/numcalc/numcalc.h"
 
 
-TEST(Vector, VectorInstanceMultiply) {
-    auto V1 = Matrix::Vector(3, 1.0);
-    auto V2 = Matrix::Vector(3, 1.0);
-    auto Vn = Matrix::Vector(3, 1.0) * 5.0;
+TEST(multiarray, vector_multiply) {
+    auto V1 = numcalc::multirray::Vector(3, 1.0);
+    auto V2 = numcalc::multirray::Vector(3, 1.0);
+    auto Vn = numcalc::multirray::Vector(3, 1.0) * 5.0;
 
     auto V3 = 3.0 * V1;
     auto V4 = V2 * 1.5;
@@ -19,8 +19,8 @@ TEST(Vector, VectorInstanceMultiply) {
     EXPECT_EQ(Vn[2], 5.0);
 }
 
-TEST(Vector, VectorDot) {
-    auto V1 = Matrix::Vector(3, 1.0);
+TEST(multiarray, vector_dot) {
+    auto V1 = numcalc::multirray::Vector(3, 1.0);
 
-    EXPECT_NEAR(Matrix::fabs(V1), std::sqrt(3), 0.0001);
+    EXPECT_NEAR(numcalc::multirray::fabs(V1), std::sqrt(3), 0.0001);
 }

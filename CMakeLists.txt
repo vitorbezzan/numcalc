@@ -11,10 +11,8 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(GTest REQUIRED)
-include_directories(${GTEST_INCLUDE_DIR})
 
 if(APPLE)
-    message("Building for MacOS. Setting specific configurations.")
     execute_process(
             COMMAND brew --prefix
             RESULT_VARIABLE HOMEBREW
@@ -45,14 +43,12 @@ if(APPLE)
     )
 
     add_executable(run_tests tests.cpp)
-    target_link_libraries(run_tests ${GTEST_LIBRARIES} cblas lapack pthread)
+    target_link_libraries(run_tests GTest::gtest GTest::gtest_main cblas lapack pthread)
 
     add_library(numcalc SHARED library.cpp)
     target_link_libraries(numcalc cblas lapack pthread)
 
 elseif(UNIX)
-    message("Building for *nix.")
-
     find_package(BLAS REQUIRED)
     find_package(LAPACK REQUIRED)
 
@@ -60,7 +56,7 @@ elseif(UNIX)
     message(STATUS LAPACK found: ${LAPACK_LIBRARIES})
 
     add_executable(run_tests tests.cpp)
-    target_link_libraries(run_tests ${GTEST_LIBRARIES} ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES} pthread)
+    target_link_libraries(run_tests GTest::gtest GTest::gtest_main ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES} pthread)
 
     add_library(numcalc SHARED library.cpp)
     target_link_libraries(numcalc ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES} pthread)

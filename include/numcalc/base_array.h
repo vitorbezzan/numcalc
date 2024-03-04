@@ -6,7 +6,9 @@
 #include <numeric>
 #include <stdexcept>
 
-namespace Matrix {
+namespace numcalc::multirray {
+    // Definitions for multiarrays - base
+
     template<typename T = float>
         requires std::is_arithmetic_v<T>
     class BaseArray {
@@ -161,6 +163,6 @@ namespace Matrix {
                 throw std::runtime_error("Dimesion size mismatch");
         }
     };
-} // namespace Matrix
+}
 
 #endif

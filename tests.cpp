@@ -2,6 +2,7 @@
 
 #include "tests/base_array.cpp"
 #include "tests/derivatives.cpp"
+#include "tests/explicit_fde.cpp"
 #include "tests/matrix.cpp"
 #include "tests/newton.cpp"
 #include "tests/vector.cpp"

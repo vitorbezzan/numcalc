@@ -10,14 +10,14 @@ TEST(multiarray, matrix_scalar) {
     auto M = numcalc::multirray::Matrix<double>(3, 3, 6.0);
     auto p2 = M * 0.5;
 
-    EXPECT_NEAR(p2(1,1), 3.0, 0.0001);
+    EXPECT_NEAR(p2(1, 1), 3.0, 0.0001);
 }
 
 TEST(multiarray, scalar_matrix) {
     auto M = numcalc::multirray::Matrix<double>(3, 3, 6.0);
     auto p1 = 0.5 * M;
 
-    EXPECT_NEAR(p1(2,2), 3.0, 0.0001);
+    EXPECT_NEAR(p1(2, 2), 3.0, 0.0001);
 }
 
 TEST(multiarray, matrix_vector) {

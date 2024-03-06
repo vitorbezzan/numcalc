@@ -15,23 +15,23 @@ namespace numcalc::multirray {
         friend class Vector<T>;
 
     public:
-        Vector(): BaseArray<T>() {
+        Vector() : BaseArray<T>() {
         }
 
-        Vector(const int &N): BaseArray<T>({N}) {
+        explicit Vector(const int &N) : BaseArray<T>({N}) {
         }
 
-        Vector(const int &N, const T &value): BaseArray<T>({N}, value) {
+        Vector(const int &N, const T &value) : BaseArray<T>({N}, value) {
         }
 
-        Vector(const BaseArray<T> &base): BaseArray<T>(base) {
+        explicit Vector(const BaseArray<T> &base) : BaseArray<T>(base) {
         }
 
         T &operator[](const int &i) {
             return BaseArray<T>::operator()({i});
         }
 
-        Vector(T (*function)(const T &)) {
+        explicit Vector(T (*function)(const T &)) {
             for (int i = 0; i < this->nelements(); i++)
                 this->operator[](i) = function(i);
         }
@@ -40,14 +40,14 @@ namespace numcalc::multirray {
     // Vector * scalar
 
     template<typename T, typename PrT>
-        requires std::is_arithmetic_v<PrT>
+    requires std::is_arithmetic_v<PrT>
     Vector<T> operator*(const Vector<T> &V, const PrT &value) {
         throw std::runtime_error("Unsupported type for multiply");
     }
 
 
     template<typename PrT>
-        requires std::is_arithmetic_v<PrT>
+    requires std::is_arithmetic_v<PrT>
     Vector<float> operator*(const Vector<float> &V, const PrT &value) {
         auto result = Vector<float>(V);
         cblas_sscal(result.nelements(), (float) value, result.data(), 1);
@@ -56,7 +56,7 @@ namespace numcalc::multirray {
     }
 
     template<typename PrT>
-        requires std::is_arithmetic_v<PrT>
+    requires std::is_arithmetic_v<PrT>
     Vector<float> operator*(const PrT &value, const Vector<float> &V) {
         auto result = Vector<float>(V);
         cblas_sscal(result.nelements(), (float) value, result.data(), 1);
@@ -65,7 +65,7 @@ namespace numcalc::multirray {
     }
 
     template<typename PrT>
-        requires std::is_arithmetic_v<PrT>
+    requires std::is_arithmetic_v<PrT>
     Vector<double> operator*(const Vector<double> &V, const PrT &value) {
         auto result = Vector<double>(V);
         cblas_dscal(result.nelements(), (double) value, result.data(), 1);
@@ -74,7 +74,7 @@ namespace numcalc::multirray {
     }
 
     template<typename PrT>
-        requires std::is_arithmetic_v<PrT>
+    requires std::is_arithmetic_v<PrT>
     Vector<double> operator*(const PrT &value, const Vector<double> &V) {
         auto result = Vector<double>(V);
         cblas_dscal(result.nelements(), (double) value, result.data(), 1);
@@ -97,7 +97,7 @@ namespace numcalc::multirray {
     }
 
     template<typename T>
-    T fabs(Vector<T> &v) {
+    inline T fabs(Vector<T> &v) {
         return std::sqrt(dot(v, v));
     }
 }

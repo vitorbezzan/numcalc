@@ -6,8 +6,7 @@
 namespace numcalc::root {
     // Rootfinding techniques for explicit equations
 
-    template<typename OutT, typename PrT>
-        requires std::is_floating_point_v<PrT>
+    template<typename OutT, typename PrT> requires std::is_floating_point_v<PrT>
     class BaseRootFind {
     public:
         BaseRootFind() = default;
@@ -37,15 +36,14 @@ namespace numcalc::root {
     };
 
     // Newton rootfinding method
-    template<typename PrT>
-        requires std::is_floating_point_v<PrT>
+    template<typename PrT> requires std::is_floating_point_v<PrT>
     class Newton final : public BaseRootFind<PrT, PrT> {
     public:
         Newton() = default;
 
         Newton(PrT (*function)(const PrT &), const PrT &x0, const int &n_iter = 50,
                const PrT &precision = 1e-4, const PrT &dx_precision = 1e-4)
-            : BaseRootFind<PrT, PrT>(n_iter, precision) {
+                : BaseRootFind<PrT, PrT>(n_iter, precision) {
             _x0 = x0;
             _func = function;
             _dx_precision = dx_precision;

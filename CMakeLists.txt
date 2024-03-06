@@ -12,14 +12,14 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(GTest REQUIRED)
 
-if(APPLE)
+if (APPLE)
     execute_process(
             COMMAND brew --prefix
             RESULT_VARIABLE HOMEBREW
             OUTPUT_VARIABLE HOMEBREW_PREFIX
             OUTPUT_STRIP_TRAILING_WHITESPACE
     )
-    message( STATUS Homebrew Prefix: ${HOMEBREW_PREFIX} )
+    message(STATUS Homebrew Prefix: ${HOMEBREW_PREFIX})
 
     set(CMAKE_PREFIX_PATH
             "${HOMEBREW_PREFIX}"
@@ -48,7 +48,7 @@ if(APPLE)
     add_library(numcalc SHARED library.cpp)
     target_link_libraries(numcalc cblas lapack pthread)
 
-elseif(UNIX)
+elseif (UNIX)
     find_package(BLAS REQUIRED)
     find_package(LAPACK REQUIRED)
 
@@ -58,7 +58,8 @@ elseif(UNIX)
     add_executable(run_tests tests.cpp)
     target_link_libraries(run_tests GTest::gtest GTest::gtest_main ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES} pthread)
 
-    add_library(numcalc SHARED library.cpp)
+    add_library(numcalc SHARED library.cpp
+            tests/explicit_fde.cpp)
     target_link_libraries(numcalc ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES} pthread)
 
-endif()
+endif ()

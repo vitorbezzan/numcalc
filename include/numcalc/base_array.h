@@ -9,8 +9,7 @@
 namespace numcalc::multirray {
     // Definitions for multiarrays - base
 
-    template<typename T = float>
-        requires std::is_arithmetic_v<T>
+    template<typename T = float> requires std::is_arithmetic_v<T>
     class BaseArray {
         friend class BaseArray<T>;
 
@@ -24,7 +23,7 @@ namespace numcalc::multirray {
 
         template<int N>
         BaseArray(const int (&dimensions)[N], const T &value)
-            : BaseArray(dimensions) {
+                : BaseArray(dimensions) {
             std::fill_n(_data, _nelements, value);
         }
 
@@ -95,11 +94,11 @@ namespace numcalc::multirray {
             _check_sizes(right);
 
             std::transform(
-                _data,
-                _data + _nelements,
-                right._data,
-                _data,
-                std::plus<T>());
+                    _data,
+                    _data + _nelements,
+                    right._data,
+                    _data,
+                    std::plus<T>());
 
             return *this;
         }
@@ -108,11 +107,11 @@ namespace numcalc::multirray {
             _check_sizes(right);
 
             std::transform(
-                _data,
-                _data + _nelements,
-                right._data,
-                _data,
-                std::minus<T>());
+                    _data,
+                    _data + _nelements,
+                    right._data,
+                    _data,
+                    std::minus<T>());
 
             return *this;
         }

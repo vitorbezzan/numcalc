@@ -8,7 +8,7 @@ namespace numcalc::derivatives {
     // Definitions for derivatives
 
     template<typename T>
-        requires std::is_floating_point_v<T>
+    requires std::is_floating_point_v<T>
     inline T derivative2(T (*f)(const T &), const T &x, const T &dx)
     // 2-th order derivative for floating types
     {
@@ -16,7 +16,7 @@ namespace numcalc::derivatives {
     }
 
     template<typename T>
-        requires std::is_floating_point_v<T>
+    requires std::is_floating_point_v<T>
     inline T derivative4(T (*f)(const T &), const T &x, const T &dx)
     // 4-th order derivative for floating types
     {
@@ -25,7 +25,7 @@ namespace numcalc::derivatives {
     }
 
     template<typename T>
-        requires std::is_floating_point_v<T>
+    requires std::is_floating_point_v<T>
     inline T derivative(T (*f)(const T &), const T &x, const T &dx,
                         const int &order = 4) {
         if (order == 2)

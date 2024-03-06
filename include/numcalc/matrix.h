@@ -15,25 +15,25 @@ namespace numcalc::multirray {
         friend class Matrix<T>;
 
     public:
-        Matrix(): BaseArray<T>() {
+        Matrix() : BaseArray<T>() {
         }
 
-        Matrix(const int &rows, const int &cols): BaseArray<T>({rows, cols}) {
+        Matrix(const int &rows, const int &cols) : BaseArray<T>({rows, cols}) {
             _rows = rows;
             _cols = cols;
         }
 
-        Matrix(const int &rows, const int &cols, const T &value): BaseArray<T>({rows, cols}, value) {
+        Matrix(const int &rows, const int &cols, const T &value) : BaseArray<T>({rows, cols}, value) {
             _rows = rows;
             _cols = cols;
         }
 
-        Matrix(const Matrix<T> &M): BaseArray<T>(M) {
+        Matrix(const Matrix<T> &M) : BaseArray<T>(M) {
             _rows = M._rows;
             _cols = M._cols;
         }
 
-        Matrix(const BaseArray<T> &base): BaseArray<T>(base) {
+        Matrix(const BaseArray<T> &base) : BaseArray<T>(base) {
             _rows = base.dimensions()[0];
             _cols = base.dimensions()[1];
         }
@@ -64,13 +64,13 @@ namespace numcalc::multirray {
     // Matrix * scalar
 
     template<typename T, typename PrT>
-        requires std::is_arithmetic_v<PrT>
+    requires std::is_arithmetic_v<PrT>
     Matrix<T> operator*(const Matrix<T> &M, const PrT &value) {
         throw std::runtime_error("Unsupported type for multiply");
     }
 
     template<typename PrT>
-        requires std::is_arithmetic_v<PrT>
+    requires std::is_arithmetic_v<PrT>
     Matrix<float> operator*(const Matrix<float> &M, const PrT &value) {
         auto result = Vector<float>(M);
         cblas_sscal(result.nelements(), (float) value, result.data(), 1);
@@ -79,7 +79,7 @@ namespace numcalc::multirray {
     }
 
     template<typename PrT>
-        requires std::is_arithmetic_v<PrT>
+    requires std::is_arithmetic_v<PrT>
     Matrix<float> operator*(const PrT &value, const Matrix<float> &M) {
         auto result = Vector<float>(M);
         cblas_sscal(result.nelements(), (float) value, result.data(), 1);
@@ -88,7 +88,7 @@ namespace numcalc::multirray {
     }
 
     template<typename PrT>
-        requires std::is_arithmetic_v<PrT>
+    requires std::is_arithmetic_v<PrT>
     Matrix<double> operator*(const Matrix<double> &M, const PrT &value) {
         auto result = Vector<double>(M);
         cblas_dscal(result.nelements(), (double) value, result.data(), 1);
@@ -97,7 +97,7 @@ namespace numcalc::multirray {
     }
 
     template<typename PrT>
-        requires std::is_arithmetic_v<PrT>
+    requires std::is_arithmetic_v<PrT>
     Matrix<double> operator*(const PrT &value, const Matrix<double> &M) {
         auto result = Vector<double>(M);
         cblas_dscal(result.nelements(), (double) value, result.data(), 1);

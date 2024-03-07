@@ -58,7 +58,7 @@ namespace numcalc::explicit_fde {
 
         T step_size() { return _step_size; }
 
-        virtual FDESolution<T> run(T (*function)(const T &, const T &), int steps) {
+        virtual FDESolution<T> run(T (*f)(const T &, const T &), int steps) {
             return FDESolution<T>(_x0, _y0, _step_size, steps);
         }
 
@@ -73,12 +73,12 @@ namespace numcalc::explicit_fde {
     public:
         Euler(const T &x0, const T &y0, const T &step_size = 0.01) : FDEBase<T>(x0, y0, step_size) {}
 
-        FDESolution<T> run(T (*function)(const T &, const T &), int steps) override {
-            auto solution = FDEBase<T>::run(function, steps);
+        FDESolution<T> run(T (*f)(const T &, const T &), int steps) override {
+            auto solution = FDEBase<T>::run(f, steps);
             auto x = this->x0();
 
             for (int step = 1; step <= steps; step++) {
-                solution[step] = solution[step - 1] + (function(x, solution[step - 1]) * this->step_size());
+                solution[step] = solution[step - 1] + (f(x, solution[step - 1]) * this->step_size());
 
                 x += this->step_size();
             }
@@ -92,15 +92,15 @@ namespace numcalc::explicit_fde {
     public:
         RK4(const T &x0, const T &y0, const T &step_size = 0.01) : FDEBase<T>(x0, y0, step_size) {}
 
-        FDESolution<T> run(T (*function)(const T &, const T &), int steps) override {
-            auto solution = FDEBase<T>::run(function, steps);
+        FDESolution<T> run(T (*f)(const T &, const T &), int steps) override {
+            auto solution = FDEBase<T>::run(f, steps);
             auto x = this->x0();
 
             for (int step = 1; step <= steps; step++) {
-                auto k1 = function(x, solution[step - 1]);
-                auto k2 = function(x + (this->step_size() / 2), solution[step - 1] + this->step_size() * (k1 / 2));
-                auto k3 = function(x + (this->step_size() / 2), solution[step - 1] + this->step_size() * (k2 / 2));
-                auto k4 = function(x + this->step_size(), solution[step - 1] + this->step_size() * k3);
+                auto k1 = f(x, solution[step - 1]);
+                auto k2 = f(x + (this->step_size() / 2), solution[step - 1] + this->step_size() * (k1 / 2));
+                auto k3 = f(x + (this->step_size() / 2), solution[step - 1] + this->step_size() * (k2 / 2));
+                auto k4 = f(x + this->step_size(), solution[step - 1] + this->step_size() * k3);
 
                 solution[step] = solution[step - 1] + (this->step_size() / 6) * (k1 + 2 * k2 + 2 * k3 + k4);
 

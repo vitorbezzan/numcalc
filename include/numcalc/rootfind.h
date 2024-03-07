@@ -41,11 +41,11 @@ namespace numcalc::root {
     public:
         Newton() = default;
 
-        Newton(PrT (*function)(const PrT &), const PrT &x0, const int &n_iter = 50,
+        Newton(PrT (*f)(const PrT &), const PrT &x0, const int &n_iter = 50,
                const PrT &precision = 1e-4, const PrT &dx_precision = 1e-4)
                 : BaseRootFind<PrT, PrT>(n_iter, precision) {
             _x0 = x0;
-            _func = function;
+            _func = f;
             _dx_precision = dx_precision;
         }
 

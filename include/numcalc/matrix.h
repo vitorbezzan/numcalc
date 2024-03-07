@@ -42,10 +42,10 @@ namespace numcalc::multirray {
             return BaseArray<T>::operator()({row, col});
         }
 
-        Matrix(T (*function)(const T &, const T &)) {
+        Matrix(T (*f)(const T &, const T &)) {
             for (int row = 0; row < _rows; row++)
                 for (int col = 0; col < _cols; col++)
-                    this->operator()(row, col) = function(row, col);
+                    this->operator()(row, col) = f(row, col);
         }
 
         int rows() const {

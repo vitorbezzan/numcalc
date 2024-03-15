@@ -58,9 +58,7 @@ elseif (UNIX)
     add_executable(run_tests tests.cpp)
     target_link_libraries(run_tests GTest::gtest GTest::gtest_main ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES} pthread)
 
-    add_library(numcalc SHARED library.cpp
-            tests/explicit_fde.cpp
-            include/numcalc/integration.h)
+    add_library(numcalc SHARED library.cpp)
     target_link_libraries(numcalc ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES} pthread)
 
 endif ()

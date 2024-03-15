@@ -5,6 +5,7 @@ namespace numcalc::integration_1d {
     // 1-D integrators and calculators
     template<typename T> requires std::is_floating_point_v<T>
     class BaseIntegrator {
+    public:
         virtual T integrate(T (*f)(const T &), const T &a, const T &b, const int &N) {
             return (b - a) / N;
         }
@@ -12,6 +13,7 @@ namespace numcalc::integration_1d {
 
     template<typename T> requires std::is_floating_point_v<T>
     class Rectangle : BaseIntegrator<T> {
+    public:
         T integrate(T (*f)(const T &), const T &a, const T &b, const int &N) override {
             auto step_size = BaseIntegrator<T>::integrate(f, a, b, N);
 
@@ -26,6 +28,7 @@ namespace numcalc::integration_1d {
 
     template<typename T> requires std::is_floating_point_v<T>
     class Trapezium : BaseIntegrator<T> {
+    public:
         T integrate(T (*f)(const T &), const T &a, const T &b, const int &N) override {
             auto step_size = BaseIntegrator<T>::integrate(f, a, b, N);
 
@@ -40,20 +43,17 @@ namespace numcalc::integration_1d {
 
     template<typename T> requires std::is_floating_point_v<T>
     class Simpson : BaseIntegrator<T> {
+    public:
         T integrate(T (*f)(const T &), const T &a, const T &b, const int &N) override {
-            int n = N;
-            if (N % 2)
-                n += 1;
-
-            auto step_size = BaseIntegrator<T>::integrate(f, a, b, n);
+            auto step_size = BaseIntegrator<T>::integrate(f, a, b, N);
 
             T result = 0;
-            for (int i = 0; i < (n / 2) + 1; i++) {
-                result +=
-                        f(a + (2 * i - 2) * step_size) + 4 * f(a + (2 * i - 1) * step_size) + f(a + 2 * i * step_size);
+            for (int i = 0; i < N; i++) {
+                auto a_n = (a + step_size * i);
+                result += f(a_n) + 4 * f(a_n + step_size / 2) + f(a_n + step_size);
             }
 
-            return result * (step_size / 3);
+            return result * (step_size / 6);
         }
     };
 }
